@@ -11,6 +11,7 @@ public class Hej {
 		System.out.println("Christiiiin tester også!")
 		System.out.println("Magnus tester også!")
 		System.out.println("Test fra Thomas")
+		System.out.println("Test fra Emil");
 	}
 
 }
