@@ -1,10 +1,11 @@
+import userInterface.UserInterface;
+import data.Data;
+import functionality.Functionality;
 
 public class Main {
 
 	public static void main(String[] args) {
-
-		System.out.println("Test");
-
+		new UserInterface(new Functionality(new Data()));
 	}
 
 }

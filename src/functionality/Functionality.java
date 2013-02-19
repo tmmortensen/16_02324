@@ -10,8 +10,19 @@ public class Functionality implements IFunctionality {
 	
 	public Functionality(IData data) {
 		this.data = data;
+		// --------------------------------------------------------------------------
+		// Hard coded system administrator account.
+		data.createOperator(new Operator(10, "sysadmin", "", ">02324it!<"));
+		// Hard coded test user accounts.
+		data.createOperator(new Operator(12, "Peter", "020287-3727", "123445er"));
+		data.createOperator(new Operator(13, "Mark", "230285-1123", "123456wri"));
+		data.createOperator(new Operator(14, "Nikoline", "240591-3286", "123456kh"));
+		data.createOperator(new Operator(15, "Tobias", "270785-1237", "123456khu"));
+		data.createOperator(new Operator(16, "Juli", "010190-1123", "123456hku"));
+		// --------------------------------------------------------------------------
 	}
-	
+
+	@Override
 	public Operator getOperator(int id) throws FunctionalityException {
 		try {
 			return data.getOperator(id);
@@ -19,9 +30,11 @@ public class Functionality implements IFunctionality {
 			throw new FunctionalityException(dataException.getMessage());
 		}
 	}
+	@Override
 	public Operator[] getOperators() {
 		return data.getOperators();
 	}
+	@Override
 	public Operator createOperator(String name, String cpr, String password) throws FunctionalityException {
 		validateName(name);
 		validateCpr(cpr);
@@ -30,6 +43,7 @@ public class Functionality implements IFunctionality {
 		data.createOperator(operator);
 		return operator;
 	}
+	@Override
 	public void renameOperator(int id, String newName) throws FunctionalityException {
 		validateName(newName);
 		try {
@@ -38,6 +52,7 @@ public class Functionality implements IFunctionality {
 			throw new FunctionalityException(dataException.getMessage());
 		}
 	}
+	@Override
 	public void changeOperatorPassword(int id, String oldPassword, String newPassword) throws FunctionalityException {
 		validatePassword(newPassword);
 		try {
@@ -69,7 +84,7 @@ public class Functionality implements IFunctionality {
 		}
 	}
 	private void validateName(String name) throws FunctionalityException {
-		if (name.length() < 1 || name.length() > 20) {
+		if (!name.matches("^.{1,20}$")) {
 			throw new FunctionalityException("Name is invalid.");
 		}
 	}
@@ -79,8 +94,14 @@ public class Functionality implements IFunctionality {
 		}
 	}
 	private void validatePassword(String password) throws FunctionalityException {
-		// ...
-		//throw new FunctionalityException("Password is invalid.");
+		int categories = 0;
+		if (password.matches("[A-Z]")) categories++;
+		if (password.matches("[a-z]")) categories++;
+		if (password.matches("[0-9]")) categories++;
+		if (password.matches("[\\.\\-_+!?=]")) categories++;
+		if (categories < 3 || !password.matches("^.{6,}$")) {
+			throw new FunctionalityException("Password is invalid.");
+		}
 	}
 
 }
