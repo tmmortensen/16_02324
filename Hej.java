@@ -9,7 +9,7 @@ public class Hej {
 		
 		System.out.println("Test");
 		System.out.println("Christiiiin tester også!")
-
+		System.out.println("Magnus tester også!")
 	}
 
 }
