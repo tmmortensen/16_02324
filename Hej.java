@@ -8,7 +8,7 @@ public class Hej {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Test");
-		System.out.println("Christiiiin tester ogsŒ!")
+		System.out.println("Christiiiin tester ogsÃ¥!")
 
 	}
 
