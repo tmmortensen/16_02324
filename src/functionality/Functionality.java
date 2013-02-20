@@ -3,6 +3,7 @@ package functionality;
 import data.IData;
 import data.IData.DataException;
 import data.IData.Operator;
+import functionality.IFunctionality.FunctionalityException;
 
 public class Functionality implements IFunctionality {
 
@@ -33,6 +34,10 @@ public class Functionality implements IFunctionality {
 	@Override
 	public Operator[] getOperators() {
 		return data.getOperators();
+	}
+	@Override
+	public boolean verifyOperatorPassword(int id, String password) throws FunctionalityException {
+		return getOperator(id).getPassword().equals(password);
 	}
 	@Override
 	public Operator createOperator(String name, String cpr, String password) throws FunctionalityException {
@@ -69,7 +74,7 @@ public class Functionality implements IFunctionality {
 	private int findFirstAvailableId() throws FunctionalityException {
 		int id = 11;
 		Operator[] operators = data.getOperators();
-		Loop:
+		loop:
 		while (true) {
 			for (Operator operator : operators) {
 				if (operator.getId() == id) {
@@ -77,7 +82,7 @@ public class Functionality implements IFunctionality {
 						throw new FunctionalityException("All ids are taken.");
 					}
 					id++;
-					continue Loop;
+					continue loop;
 				}
 			}
 			return id;
@@ -95,10 +100,10 @@ public class Functionality implements IFunctionality {
 	}
 	private void validatePassword(String password) throws FunctionalityException {
 		int categories = 0;
-		if (password.matches("[A-Z]")) categories++;
-		if (password.matches("[a-z]")) categories++;
-		if (password.matches("[0-9]")) categories++;
-		if (password.matches("[\\.\\-_+!?=]")) categories++;
+		if (password.matches(".*[A-Z].*")) categories++;
+		if (password.matches(".*[a-z].*")) categories++;
+		if (password.matches(".*[0-9].*")) categories++;
+		if (password.matches(".*[\\.\\-_+!?=].*")) categories++;
 		if (categories < 3 || !password.matches("^.{6,}$")) {
 			throw new FunctionalityException("Password is invalid.");
 		}

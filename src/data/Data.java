@@ -17,7 +17,7 @@ public class Data implements IData {
 	}
 	@Override
 	public Operator[] getOperators() {
-		return (Operator[]) operators.toArray();
+		return operators.toArray(new Operator[operators.size()]);
 	}
 	@Override
 	public void createOperator(Operator operator) {
